@@ -73,7 +73,8 @@ function callback(error, response, body) {
     // response.json({message: info});
   }
   else {
-      console.log(error);
+      res.json(error);
+    //   console.log(error);
   }
 }
 
