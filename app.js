@@ -84,14 +84,15 @@ function callback(error, response, body) {
 
 		for (var i = 0; i < restaurant; i++) {
 			restaurantCodes[i] = info.nearby_restaurants[i+1].restaurant.R.res_id;
-			restaurantLat[i] = JSON.parse(info.nearby_restaurants[i+1].restaurant.location.latitude);
-			restaurantLng[i] = JSON.parse(info.nearby_restaurants[i+1].restaurant.location.longitude);
-			userRatingVotes[i] = JSON.parse(info.nearby_restaurants[i+1].restaurant.user_rating.votes);
+			restaurantLat[i] = (info.nearby_restaurants[i+1].restaurant.location.latitude);
+			restaurantLng[i] = (info.nearby_restaurants[i+1].restaurant.location.longitude);
+			userRatingVotes[i] = (info.nearby_restaurants[i+1].restaurant.user_rating.votes);
 		}
 
 
 		var responseJSON = JSON.stringify({codes: restaurantCodes, lats: restaurantLat, lngs: restaurantLng, votes: userRatingVotes});
 
+		res.setHeader('Content-Type', 'application/json');
 		res.send(responseJSON);
   }
   else {
