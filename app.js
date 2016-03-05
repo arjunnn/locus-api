@@ -84,36 +84,19 @@ function callback(error, response, body) {
 
 		for (var i = 0; i < restaurant; i++) {
 			restaurantCodes[i] = info.nearby_restaurants[i+1].restaurant.R.res_id;
-			restaurantLat[i] = info.nearby_restaurants[i+1].restaurant.location.latitude;
-			restaurantLng[i] = info.nearby_restaurants[i+1].restaurant.location.longitude;
-			userRatingVotes[i] = info.nearby_restaurants[i+1].restaurant.user_rating.votes;
+			restaurantLat[i] = JSON.parse(info.nearby_restaurants[i+1].restaurant.location.latitude);
+			restaurantLng[i] = JSON.parse(info.nearby_restaurants[i+1].restaurant.location.longitude);
+			userRatingVotes[i] = JSON.parse(info.nearby_restaurants[i+1].restaurant.user_rating.votes);
 		}
 
-		// var restaurantInfo = [];
-		// var jsonSerial;
-		// for (var i = 0; i < restaurant; i++) {
-		// 	for (var j = 0; j < 5; j++) {
-		// 		jsonSerial = JSON.stringify(i+":"+"stuff");
-		// 	}
-		//
-		// }
-		// console.log(restaurantLng[3]);
 
-		// var restaurantCodesJSON = JSON.stringify({restaurantCodes});
-		// var restaurantLatJSON = JSON.stringify({restaurantLat});
-		// var restaurantLngJSON = JSON.stringify({restaurantLng});
-		// var userRatingVotesJSON = JSON.stringify({userRatingVotes});
-
-		// var responseJSON = JSON.stringify({restaurantCodes, restaurantLat, restaurantLng});
 		var responseJSON = JSON.stringify({codes: restaurantCodes, lats: restaurantLat, lngs: restaurantLng, votes: userRatingVotes});
-		// var responseJSON = JSON.stringify(restaurantCodes);
 
 		res.send(responseJSON);
   }
   else {
       res.json(error);
-    //   console.log(error);
-  }
+		}
 }
 
 
@@ -121,6 +104,13 @@ request(options, callback);
     // res.json({message: 'Geocode is '+latitude+' latitude & '+longitude+' longitude & url='+url + info});
 
 })
+
+router.route('/test')
+
+.get(function(req, res) {
+	res.send("Hi there. Your connection is 100% OK");
+});
+
 
 
 
