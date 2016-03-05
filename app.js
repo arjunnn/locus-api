@@ -99,13 +99,13 @@ function callback(error, response, body) {
 		// }
 		// console.log(restaurantLng[3]);
 
-		var restaurantCodesJSON = JSON.stringify(restaurantCodes);
-		var restaurantLatJSON = JSON.stringify(restaurantLat);
-		var restaurantLngJSON = JSON.stringify(restaurantLng);
-		var userRatingVotesJSON = JSON.stringify(userRatingVotes);
+		// var restaurantCodesJSON = JSON.stringify({restaurantCodes});
+		// var restaurantLatJSON = JSON.stringify({restaurantLat});
+		// var restaurantLngJSON = JSON.stringify({restaurantLng});
+		// var userRatingVotesJSON = JSON.stringify({userRatingVotes});
 
 		// var responseJSON = JSON.stringify({restaurantCodes, restaurantLat, restaurantLng});
-		var responseJSON = JSON.stringify({codes: restaurantCodesJSON, lats: restaurantLatJSON, lngs: restaurantLngJSON, votes: userRatingVotesJSON});
+		var responseJSON = JSON.stringify({codes: restaurantCodes, lats: restaurantLat, lngs: restaurantLng, votes: userRatingVotes});
 		// var responseJSON = JSON.stringify(restaurantCodes);
 
 		res.send(responseJSON);
