@@ -52,10 +52,10 @@ router.route('/geocode')
 
 .get(function(req, res) {
     latitude = req.headers.lat;
-    longitude = req.headers.lon;
+    longitude = req.headers.lng;
     url = 'https://developers.zomato.com/api/v2.1/geocode?lat='+latitude+'&lon='+longitude;
     user_key = 'e1fd503923ef41dd65f0772663565809';
-    
+
     var options = {
         url: url,
         headers: {
@@ -66,11 +66,49 @@ router.route('/geocode')
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
     info = JSON.parse(body);
-    // info = body;
-    res.json(info);
-    
-    // console.log(info);
-    // response.json({message: info});
+
+    var restaurantCode = info.nearby_restaurants[1].restaurant.R.res_id;
+    console.log(restaurantCode);
+
+		var restaurantCodes = [];
+		var restaurantLat = [];
+		var restaurantLng = [];
+		var userRatingVotes = [];
+
+		for (var restaurant in info.nearby_restaurants) {
+			if (info.nearby_restaurants.hasOwnProperty(restaurant)) {
+
+			}
+		}
+		console.log(restaurant);
+
+		for (var i = 0; i < restaurant; i++) {
+			restaurantCodes[i] = info.nearby_restaurants[i+1].restaurant.R.res_id;
+			restaurantLat[i] = info.nearby_restaurants[i+1].restaurant.location.latitude;
+			restaurantLng[i] = info.nearby_restaurants[i+1].restaurant.location.longitude;
+			userRatingVotes[i] = info.nearby_restaurants[i+1].restaurant.user_rating.votes;
+		}
+
+		// var restaurantInfo = [];
+		// var jsonSerial;
+		// for (var i = 0; i < restaurant; i++) {
+		// 	for (var j = 0; j < 5; j++) {
+		// 		jsonSerial = JSON.stringify(i+":"+"stuff");
+		// 	}
+		//
+		// }
+		// console.log(restaurantLng[3]);
+
+		var restaurantCodesJSON = JSON.stringify(restaurantCodes);
+		var restaurantLatJSON = JSON.stringify(restaurantLat);
+		var restaurantLngJSON = JSON.stringify(restaurantLng);
+		var userRatingVotesJSON = JSON.stringify(userRatingVotes);
+
+		// var responseJSON = JSON.stringify({restaurantCodes, restaurantLat, restaurantLng});
+		var responseJSON = JSON.stringify({codes: restaurantCodesJSON, lats: restaurantLatJSON, lngs: restaurantLngJSON, votes: userRatingVotesJSON});
+		// var responseJSON = JSON.stringify(restaurantCodes);
+
+		res.send(responseJSON);
   }
   else {
       res.json(error);
@@ -80,18 +118,18 @@ function callback(error, response, body) {
 
 
 request(options, callback);
-    // res.json({message: 'Geocode is '+latitude+' latitude & '+longitude+' longitude & url='+url + info});   
-    
+    // res.json({message: 'Geocode is '+latitude+' latitude & '+longitude+' longitude & url='+url + info});
+
 })
 
 
 
 // .sendGET(function (url, user_key) {
-    
+
 // })
 
 	// get all the places (accessed at GET http://localhost:8080/api/places)
-	
+
 
 // // on routes that end in /places
 // // ----------------------------------------------------
@@ -99,7 +137,7 @@ request(options, callback);
 
 // 	// create a place (accessed at POST http://localhost:8080/places)
 // 	.post(function(req, res) {
-		
+
 // 		var place = new Place();		// create a new instance of the Place model
 // 		place.name = req.body.name;  // set the places name (comes from the request)
 //         console.log('new place name added'+ place.name);
@@ -112,7 +150,7 @@ request(options, callback);
 // 			res.json({ message: 'Place created!' });
 // 		});
 
-		
+
 // 	})
 
 // 	// get all the places (accessed at GET http://localhost:8080/api/places)
