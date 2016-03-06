@@ -54,35 +54,24 @@ router.route('/geocode')
     latitude = req.headers.lat;
     longitude = req.headers.lng;
     url = 'https://developers.zomato.com/api/v2.1/geocode?lat='+latitude+'&lon='+longitude;
-
-
     var options = {
         url: url,
         headers: {
             'user_key': user_key
         }
     };
-
 		function callback(error, response, body) {
   		if (!error && response.statusCode == 200) {
 				info = JSON.parse(body);
-
-		    // var restaurantCode = info.nearby_restaurants[1].restaurant.R.res_id;
-		    // console.log(restaurantCode);
-
 				var restaurantCodes = [];
 				var restaurantLat = [];
 				var restaurantLng = [];
 				var userRatingVotes = [];
 				var restaurantNames = [];
-
 				for (var restaurant in info.nearby_restaurants) {
 					if (info.nearby_restaurants.hasOwnProperty(restaurant)) {
-
 					}
 				}
-				// console.log(restaurant);
-
 				for (var i = 0; i < restaurant; i ++) {
 					restaurantCodes[i] = info.nearby_restaurants[i+1].restaurant.R.res_id;
 					restaurantLat[i] = info.nearby_restaurants[i+1].restaurant.location.latitude;
@@ -90,10 +79,7 @@ router.route('/geocode')
 					aggregateRatings[i] = info.nearby_restaurants[i+1].restaurant.user_rating.aggregate_rating;
 					restaurantNames[i] = info.nearby_restaurants[i+1].restaurant.name;
 				}
-
-
 				var responseJSON = JSON.stringify({names: restaurantNames, codes: restaurantCodes, lats: restaurantLat, lngs: restaurantLng, ratings: aggregateRatings});
-
 				res.setHeader('Content-Type', 'application/json');
 				res.send(responseJSON);
 		  }
@@ -103,11 +89,10 @@ router.route('/geocode')
 		}
 
 	request(options, callback);
-    // res.json({message: 'Geocode is '+latitude+' latitude & '+longitude+' longitude & url='+url + info});
 })
 
-router.route('/test')
 
+router.route('/test')
 .get(function(req, res) {
 	res.send("Hi there. Your connection is 100% OK");
 })
