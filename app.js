@@ -66,7 +66,7 @@ router.route('/geocode')
 				var restaurantCodes = [];
 				var restaurantLat = [];
 				var restaurantLng = [];
-				var userRatingVotes = [];
+				var aggregateRatings = [];
 				var restaurantNames = [];
 				for (var restaurant in info.nearby_restaurants) {
 					if (info.nearby_restaurants.hasOwnProperty(restaurant)) {
