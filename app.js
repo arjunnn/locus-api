@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var app        = express();
 var morgan     = require('morgan');
 var request    = require('request');
+var path       = require('path');
 
 // configure app
 app.use(morgan('dev')); // log requests to the console
@@ -42,7 +43,9 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-    res.json({message: "Hooray! welcome to Locus API"})
+		// res.sendFile(readme.md);
+		res.sendFile(path.join(__dirname, '.', 'api.html'));
+    // res.json({message: "Hooray! welcome to Locus API"})
 });
 
 // on routes that end in geocode
