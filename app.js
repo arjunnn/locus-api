@@ -235,7 +235,7 @@ router.route('/bookmarks')
         id,
         {
 					$AddToSet: {
-						"bookmarks": bookmark {
+						"bookmarks": {
 							place_name: place_name, latitude: latitude, longitude: longitude
 						}
 					}
