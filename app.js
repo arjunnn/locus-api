@@ -92,7 +92,7 @@ router.route('/geocode')
 						ratings[i] = info.results[i].rating;
 					}
 					else {
-						ratings[i] = "1"
+						ratings[i] = "2.5"
 					}
 					placeNames[i] = info.results[i].name;
 				}
