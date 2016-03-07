@@ -76,8 +76,8 @@ router.route('/geocode')
   		if (!error && response.statusCode == 200) {
 				info = JSON.parse(body);
 				var placeCodes = [];
-				var placeLat = [];
-				var placeLng = [];
+				var placeLats = [];
+				var placeLngs = [];
 				var ratings = [];
 				var placeNames = [];
 				// for (var place in info.nearby_places) {
@@ -86,12 +86,17 @@ router.route('/geocode')
 				// }
 				for (var i = 0; i < info.results.length ; i ++) {
 					placeCodes[i] = info.results[i].place_id;
-					placeLat[i] = info.results[i].geometry.location.lat;
-					placeLng[i] = info.results[i].geometry.location.lng;
-					ratings[i] = info.results[i].rating;
+					placeLats[i] = info.results[i].geometry.location.lat;
+					placeLngs[i] = info.results[i].geometry.location.lng;
+					if (info.results[i].hasOwnProperty('rating')) {
+						ratings[i] = info.results[i].rating;
+					}
+					else {
+						ratings[i] = "1"
+					}
 					placeNames[i] = info.results[i].name;
 				}
-				var responseJSON = JSON.stringify({names: placeNames, codes: placeCodes, lats: placeLat, lngs: placeLng, ratings: ratings});
+				var responseJSON = JSON.stringify({names: placeNames, codes: placeCodes, lats: placeLats, lngs: placeLngs, ratings: ratings});
 				res.setHeader('Content-Type', 'application/json');
 				console.log(info.results.length);
 				res.send(responseJSON);
