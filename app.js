@@ -162,7 +162,7 @@ router.route('/place')
 			else {
 				var address = "null"
 			}
-			if (info.result.hasOwnProperty('phoneNumber')) {
+			if (info.result.hasOwnProperty('international_phone_number')) {
 				var phoneNumber = info.result.international_phone_number;
 			}
 			else {
@@ -225,9 +225,27 @@ router.route('/bookmarks')
 	var place_name = req.body.place_name;
 	var latitudes = req.body.lat;
 	var latitudes = req.body.lng;
-	User.find({ 'user_id': user_id }).execFind(function (arr,data) {
-    res.send(data);
-  });
+	// User.find({ 'user_id': user_id }).execFind(function (arr,data) {
+  //   res.send(data);
+  // });
+	// User.findOne({ 'user_id': user_id }, 'user_id', function (err, person) {
+  // if (err) return handleError(err);
+  // res.send({message: person.user_id}) // Space Ghost is a talk show host.
+	User.update({user_id: user_id}, {
+		// user_id: "arjunnn"
+    bookmarks: {
+				place_name: place_name,
+				latitude: latitude,
+				longitude: longitude
+		}
+}, function(err, numberAffected, rawResponse) {
+   //handle it
+	 if (err) res.send(err);
+	 else{
+		 res.send({message: "success"});
+	 }
+})
+// })
 
 
 	// res.send(user);
