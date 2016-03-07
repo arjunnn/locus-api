@@ -235,8 +235,10 @@ router.route('/bookmarks')
         id,
         {
 					$AddToSet: {
-						"bookmarks": {
-							place_name: place_name, latitude: latitude, longitude: longitude
+						bookmarks: {
+							place_name: place_name,
+							latitude: latitude,
+							longitude: longitude
 						}
 					}
 				},
@@ -244,9 +246,9 @@ router.route('/bookmarks')
         function(err, model) {
             console.log(err);
         }
-				// res.send({message: model});
+				res.send({message: model});
     );
-  res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
+  // res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
 	// User.update({user_id: user_id}, {
 	// 	// user_id: "arjunnn"
   //   bookmarks: {
