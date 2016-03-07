@@ -186,7 +186,7 @@ router.route('/test')
 	res.send("Hi there. Your connection is 100% OK");
 })
 
-router.route('/bookmark/add')
+router.route('/bookmarks/add')
 .post(function(req, res) {
 	var user = new User();
 	res.send("bookmarks");
@@ -211,12 +211,10 @@ router.route('/users/add')
         // res.json({ message:"added"+user.name});
 
 		user.save(function(err) {
-			if (err) {
+			if (err)
 				res.send(err);
-			}
-			else {
+
 				res.json({ message: 'user created!'+ userID.id });
-			}
 		});
 
 
