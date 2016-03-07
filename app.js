@@ -238,7 +238,7 @@ router.route('/bookmarks')
         function(err, model) {
             console.log(err);
         }
-				res.send(model);
+				res.send({message: model});
     );
   res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
 	// User.update({user_id: user_id}, {
