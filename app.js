@@ -231,13 +231,13 @@ router.route('/bookmarks')
 	// User.findOne({ 'user_id': user_id }, 'user_id', function (err, person) {
   // if (err) return handleError(err);
   // res.send({message: person.user_id}) // Space Ghost is a talk show host.
-	User.update({user_id: 'arjunmunji'}, {
-		user_id: "arjunnn"
-    // bookmarks: {
-		// 		place_name: "charminar",
-		// 		latitude: "17.3742",
-		// 		longitude: "78.8324"
-		// }
+	User.update({user_id: 'arjunnn'}, {
+		// user_id: "arjunnn"
+    bookmarks: {
+				place_name: "charminar",
+				latitude: "17.3742",
+				longitude: "78.8324"
+		}
 }, function(err, numberAffected, rawResponse) {
    //handle it
 	 if (err) res.send(err);
