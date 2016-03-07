@@ -20,11 +20,11 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     // name: String,
     user_id: String,
-    bookmarks: [{
+    bookmarks: { type : Array , "default" : [
       place_name: String,
       latitude: String,
       longitude: String
-    }]
+    ]}
 })
 var User = mongoose.model('User', userSchema);
 
