@@ -233,7 +233,7 @@ router.route('/bookmarks')
 	var id = person._id;
 	User.findByIdAndUpdate(
         id,
-        {$push: {"bookmarks": {place_name: place_name, latitude: latitude, longitude: longitude}}},
+        {$push: {bookmarks: {place_name: place_name, latitude: latitude, longitude: longitude}}},
         {safe: true, upsert: true, new : true},
         function(err, model) {
             console.log(err);
