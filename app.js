@@ -222,21 +222,21 @@ router.route('/bookmarks')
 //   if (err) return handleError(err);
 //   res.send(user); // Space Ghost is a talk show host.
 // })
-	// var place_name = req.body.place_name;
-	// var latitudes = req.body.lat;
-	// var latitudes = req.body.lng;
+	var place_name = req.body.place_name;
+	var latitudes = req.body.lat;
+	var latitudes = req.body.lng;
 	// User.find({ 'user_id': user_id }).execFind(function (arr,data) {
   //   res.send(data);
   // });
 	// User.findOne({ 'user_id': user_id }, 'user_id', function (err, person) {
   // if (err) return handleError(err);
   // res.send({message: person.user_id}) // Space Ghost is a talk show host.
-	User.update({user_id: 'arjunnn'}, {
+	User.update({user_id: user_id}, {
 		// user_id: "arjunnn"
     bookmarks: {
-				place_name: "charminar",
-				latitude: "17.3742",
-				longitude: "78.8324"
+				place_name: place_name,
+				latitude: latitude,
+				longitude: longitude
 		}
 }, function(err, numberAffected, rawResponse) {
    //handle it
