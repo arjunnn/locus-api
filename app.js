@@ -11,7 +11,7 @@ var path       = require('path');
 var mongoose   = require('mongoose');
 var dbConnection = require(path.join(__dirname, '.', 'dbConnection'));
 //
-dbConnection.connect();
+// dbConnection.connect();
 // configure app
 app.use(morgan('dev')); // log requests to the console
 
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 
 var port     = process.env.PORT || 8080; // set our port
 
-// mongoose.connect('mongodb://MongoLabLocus:6Dqdq3J4a7dbFw6vk0f8EEuIluv7LBmzJLR7S2KrYjo-@ds064188.mlab.com:64188/MongoLabLocus');
+mongoose.connect('mongodb://MongoLabLocus:6Dqdq3J4a7dbFw6vk0f8EEuIluv7LBmzJLR7S2KrYjo-@ds064188.mlab.com:64188/MongoLabLocus');
 
 var Place     = require('./app/models/place');
 var User      = require('./app/models/users');
