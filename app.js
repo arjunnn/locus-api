@@ -228,9 +228,23 @@ router.route('/bookmarks')
 	// User.find({ 'user_id': user_id }).execFind(function (arr,data) {
   //   res.send(data);
   // });
-	User.findOne({ 'user_id': user_id }, 'user_id', function (err, person) {
-  if (err) return handleError(err);
-  res.send({message: person.user_id}) // Space Ghost is a talk show host.
+	// User.findOne({ 'user_id': user_id }, 'user_id', function (err, person) {
+  // if (err) return handleError(err);
+  // res.send({message: person.user_id}) // Space Ghost is a talk show host.
+	User.update({user_id: user_id}, {
+		user_id: "arjunnn"
+    // bookmarks: {
+		// 		place_name: "charminar",
+		// 		latitude: "17.3742",
+		// 		longitude: "78.8324"
+		// }
+}, function(err, numberAffected, rawResponse) {
+   //handle it
+	 if (err) res.send(err);
+	 else{
+		 res.send({message: "success"});
+	 }
+})
 })
 
 
