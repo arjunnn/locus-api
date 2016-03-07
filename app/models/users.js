@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var bookmark = new Schema({
-  placeName: {
+  place_name: {
     type: String
   },
   latitude: {

@@ -179,7 +179,26 @@ router.route('/test')
 
 router.route('/bookmarks')
 .post(function(req, res) {
-	res.send("Hi there. Your connection is 100% OK");
+	var user_id = req.body.user_id;
+	var user = User.find({
+		'user_id': user_id
+	})
+	var place_name = req.body.place_name;
+	var latitudes = req.body.lat;
+	var latitudes = req.body.lng;
+	// var user = User.find();
+	// User.find({
+  //   'user_id': user_id
+  // }, function(err, teams) {
+  //   if (err) {
+  //     onErr(err, callback);
+  //   } else {
+  //     callback("", teams);
+  //   }
+  // });
+
+
+	res.send(user);
 
 })
 
