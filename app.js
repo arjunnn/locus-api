@@ -234,8 +234,8 @@ router.route('/bookmarks')
 	User.findByIdAndUpdate(
         id,
         {
-					$AddToSet: {
-						"bookmarks": {
+					$addToSet: {
+						bookmarks: {
 							place_name: place_name,
 							latitude: latitude,
 							longitude: longitude
@@ -248,7 +248,7 @@ router.route('/bookmarks')
         }
 				res.send({message: model});
     );
-  // res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
+  res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
 	// User.update({user_id: user_id}, {
 	// 	// user_id: "arjunnn"
   //   bookmarks: {
