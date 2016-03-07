@@ -215,59 +215,25 @@ router.route('/test')
 router.route('/bookmarks')
 .post(function(req, res) {
 	var user_id = req.body.user_id;
-	// var user = User.find({
-	// 	'user_id': user_id
-// 	// });
-// 	User.findOne({ 'user_id': user_id }, 'user_id', function (err, user) {
-//   if (err) return handleError(err);
-//   res.send(user); // Space Ghost is a talk show host.
-// })
 	var place_name = req.body.place_name;
 	var latitude = req.body.lat;
 	var latitude = req.body.lng;
-	// User.find({ 'user_id': user_id }).execFind(function (arr,data) {
-  //   res.send(data);
-  // });
-	// User.findOne({ 'user_id': user_id }, 'user_id _id', function (err, person) {
-  // if (err) return handleError(err);
-	// var id = person._id;
-	// User.findByIdAndUpdate(
-  //       id,
-  //       {
-	// 				$addToSet: {
-	// 					bookmarks: {
-	// 								place_name: place_name,
-	// 								latitude: latitude,
-	// 								longitude: longitude
-	// 						}
-	// 				}
-	// 			},
-  //       {safe: true, upsert: true, new : true},
-  //       function(err, model) {
-  //           console.log(err);
-  //       }
-	// 			res.send({message: model});
-  //   );
-  // res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
+
 	var bookmark = {place_name: place_name,	latitude: latitude,	longitude: longitude}
 	User.update({user_id: user_id}, {
-		// user_id: "arjunnn"
+
 		$push: {
-	    bookmarks: [bookmark]
+	    bookmarks: bookmark
 		}
 }, function(err, numberAffected, rawResponse) {
    //handle it
-	 if (err) res.send(err);
-	 else{
-		 res.send({message: "success"});
-	 }
+		 if (err) res.send(err);
+		 else{
+			 res.send({message: "success"});
+		 }
+	})
 })
-// })
 
-
-	// res.send(user);
-
-})
 
 .get(function(req, res) {
 	res.send("Hi there. Your connection is 100% OK");
