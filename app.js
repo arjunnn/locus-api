@@ -253,7 +253,7 @@ router.route('/bookmarks')
 	User.update({user_id: user_id}, {
 		// user_id: "arjunnn"
 		$push: {
-	    bookmarks: bookmark
+	    bookmarks: [bookmark]
 		}
 }, function(err, numberAffected, rawResponse) {
    //handle it
