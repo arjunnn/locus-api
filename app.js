@@ -151,15 +151,30 @@ router.route('/place')
 			res.setHeader('Content-Type', 'application/json');
 			// var imageURL = info.featured_image;
 			// var avgCostForTwo = info.average_cost_for_two;
-			var address = info.result.formatted_address;
-			var phoneNumber = info.result.international_phone_number;
+			if (info.result.hasOwnProperty('formatted_address')) {
+				var address = info.result.formatted_address;
+			}
+			else {
+				var address = "null"
+			}
+			if (info.result.hasOwnProperty('phoneNumber')) {
+				var phoneNumber = info.result.international_phone_number;
+			}
+			else {
+				var phoneNumber = "null"
+			}
 			if (info.result.hasOwnProperty('opening_hours')) {
 				var openNow = info.result.opening_hours.open_now;
 			}
 			else {
 				var openNow = "null";
 			}
-			var website = info.result.website;
+			if (info.result.hasOwnProperty('website')) {
+				var website = info.result.website;
+			}
+			else {
+				var website = "null"
+			}
 			var responseJSON = JSON.stringify({address: address, phone_number: phoneNumber, open_now: openNow, website: website});
 			res.send(responseJSON);
 		}
