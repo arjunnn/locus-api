@@ -1,26 +1,30 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var bookmark = new Schema({
-  place_name: {
-    type: String
-  },
-  latitude: {
-    type: String
-  },
-  longitude: {
-    type: String
-  },
-  date: {
-    type: Date,
-    default: Date.now
-  }
-})
+// var bookmark = new Schema({
+//   place_name: {
+//     type: String
+//   },
+//   latitude: {
+//     type: String
+//   },
+//   longitude: {
+//     type: String
+//   },
+//   date: {
+//     type: Date,
+//     default: Date.now
+//   }
+// })
 
 var userSchema = new Schema({
     // name: String,
     user_id: String,
-    bookmarks: [bookmark]
+    bookmarks: [{
+      place_name: String,
+      latitude: String,
+      longitude: String
+    }]
 })
 var User = mongoose.model('User', userSchema);
 
