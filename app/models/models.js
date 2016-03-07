@@ -13,7 +13,7 @@ var bookmark = new Schema({
   }
 })
 var UserSchema = new Schema({
-    name: String,
+    // name: String,
     id: String,
     bookmarks: [bookmark]
 })

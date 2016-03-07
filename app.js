@@ -196,26 +196,27 @@ router.route('/bookmark/add')
 
 // // on routes that end in /places
 // // ----------------------------------------------------
-router.route('/users')
+router.route('/users/add')
 
 	// create a place (accessed at POST http://localhost:8080/places)
 	.post(function(req, res) {
-		var user = new User({
-  name: 'Chris'
-  // username: 'sevilayha',
-  // password: 'password'
-});
+// 		var user = new User({
+//   name: 'Chris'
+//
+// });
 
-		// var user = new User();		// create a new instance of the user model
-		// user.name = req.body.name;  // set the user name (comes from the request)
-        console.log('new user name added'+ user.name);
-        res.json({ message:user.name});
+		var userID = new User();		// create a new instance of the user model
+		user.name = req.body.user_id;  // set the user name (comes from the request)
+        console.log('new user name added'+ userID.id);
+        // res.json({ message:"added"+user.name});
 
 		user.save(function(err) {
-			if (err)
+			if (err) {
 				res.send(err);
-
-			res.json({ message: 'user created!' });
+			}
+			else {
+				res.json({ message: 'user created!'+ userID.id });
+			}
 		});
 
 
