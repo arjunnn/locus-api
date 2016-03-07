@@ -275,39 +275,42 @@ pre.editor-colors .gfm .link .entity,
 is available at <a href="http://locus.arjun.ninja/api">http://locus.arjun.ninja/api</a> and is powered
 by a <a href="http://nodejs.org/">Node.js</a> server on <a href="https://azure.microsoft.com/en-in/">Microsoft Azure</a></p>
 <h2 id="routes">Routes</h2>
-<p>All the routes must begin with <code style="font-family: monospace;">/api</code>.
+<p>All the routes must begin with <code style="font-family: Monospace;">/api</code>.
 The following routes are available:</p>
 <ol>
-<li><h3 id="-get-geocode-"><code style="font-family: monospace;">GET /geocode</code></h3>
-<p> This route takes a HTTP GET request with two custom headers, <code style="font-family: monospace;">lat</code> and <code style="font-family: monospace;">lng</code> and returns
- a json response with details of nearby restaurants. It contains the following arrays:</p>
+<li><h3 id="-get-geocode-"><code style="font-family: Monospace;">GET /geocode</code></h3>
+<p> This route takes a HTTP GET request with three custom headers, <code style="font-family: Monospace;">lat</code>, <code style="font-family: Monospace;">lng</code>, <code style="font-family: Monospace;">radius</code> (in meters) and returns
+ a JSON response with details of nearby places. It contains the following arrays:</p>
 <ul>
-<li><code style="font-family: monospace;">names</code> : Names of restaurants</li>
-<li><code style="font-family: monospace;">codes</code> : <code style="font-family: monospace;">res_id</code> code of restaurants, which is a unique identifier for each restaurant.</li>
-<li><code style="font-family: monospace;">lats</code>  : latitudes of restaurants</li>
-<li><code style="font-family: monospace;">lngs</code>  : longitudes of restaurants</li>
-<li><p><code style="font-family: monospace;">ratings</code> : average ratings of restaurants out of 5</p>
+<li><code style="font-family: Monospace;">names[]</code> : Names of places</li>
+<li><code style="font-family: Monospace;">codes[]</code> : <code style="font-family: Monospace;">place_id</code> code of places, which is a unique identifier for each place.</li>
+<li><code style="font-family: Monospace;">lats[]</code>  : latitudes of places</li>
+<li><code style="font-family: Monospace;">lngs[]</code>  : longitudes of places</li>
+<li><p><code style="font-family: Monospace;">ratings[]</code> : average ratings of places out of 5. Could be <code style="font-family: Monospace;">null</code> in some cases, so the default rating is now 2.5</p>
 <h4 id="examples">Examples</h4>
 </li>
-<li>cURL<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>curl&nbsp;-X&nbsp;GET&nbsp;-H&nbsp;&quot;lat:&nbsp;17.3937175&quot;&nbsp;-H&nbsp;&quot;lng:&nbsp;78.5340408&quot;&nbsp;&nbsp;&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/geocode</span></span><span>&quot;</span></span></span></div></pre></li>
+<li>cURL<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>curl&nbsp;-X&nbsp;GET&nbsp;-H&nbsp;&quot;lat:&nbsp;17.3937175&quot;&nbsp;-H&nbsp;&quot;lng:&nbsp;78.5340408&quot;&nbsp;-H&nbsp;&quot;radius:&nbsp;500&quot;&nbsp;&nbsp;&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/geocode</span></span><span>&quot;</span></span></span></div></pre></li>
 <li><p>Java (using <a href="https://square.github.io/okhttp/">OkHttp</a>)</p>
-<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>OkHttpClient&nbsp;client&nbsp;=&nbsp;new&nbsp;OkHttpClient();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Request&nbsp;request&nbsp;=&nbsp;new&nbsp;Request.Builder()</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.url(&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/geocode</span></span><span>&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.get()</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.addHeader(&quot;lat&quot;,&nbsp;&quot;17.3937175&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.addHeader(&quot;lng&quot;,&nbsp;&quot;78.5340408&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.build();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Response&nbsp;response&nbsp;=&nbsp;client.newCall(request).execute();</span></span></span></div></pre></li>
+<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>OkHttpClient&nbsp;client&nbsp;=&nbsp;new&nbsp;OkHttpClient();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Request&nbsp;request&nbsp;=&nbsp;new&nbsp;Request.Builder()</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.url(&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/geocode</span></span><span>&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.get()</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.addHeader(&quot;lat&quot;,&nbsp;&quot;17.3937175&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.addHeader(&quot;lng&quot;,&nbsp;&quot;78.5340408&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.addHeader(&quot;radius&quot;,&nbsp;&quot;500&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>.build();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Response&nbsp;response&nbsp;=&nbsp;client.newCall(request).execute();</span></span></span></div></pre></li>
 </ul>
 </li>
-<li><h3 id="-get-restaurant-res_id-"><code style="font-family: monospace;">GET /restaurant/res_id</code></h3>
-<p> This route takes just the <code style="font-family: monospace;">res_id</code> value appended to the url, and returns a json
- response with the follwoing keys:</p>
+<li><h3 id="-get-place-"><code style="font-family: Monospace;">GET /place/</code></h3>
+<p> This route takes just the <code style="font-family: Monospace;">place_id</code> custom header, and returns a JSON
+ response with the following keys:</p>
 <ul>
-<li><code style="font-family: monospace;">address</code> : Address of the restaurant</li>
-<li><code style="font-family: monospace;">image_url</code> : URL of the featured image</li>
-<li><p><code style="font-family: monospace;">cost_for_two</code> : Average cost for two people</p>
+<li><code style="font-family: Monospace;">address</code> : Address of the place. Defaults to <code style="font-family: Monospace;">null</code> if key is not available.</li>
+<li><code style="font-family: Monospace;">phone_number</code> : international phone number of the place. Defaults to <code style="font-family: Monospace;">null</code> if key is not available.</li>
+<li><code style="font-family: Monospace;">open_now</code> : will return <code style="font-family: Monospace;">true</code> or <code style="font-family: Monospace;">false</code> depending on whether place is open right now. Defaults to <code style="font-family: Monospace;">null</code> if key is not available.</li>
+<li><p><code style="font-family: Monospace;">website</code> : website of the place. Defaults to <code style="font-family: Monospace;">null</code> if key is not available.</p>
+<!-- - `image_url` : URL of the featured image -->
+<!-- - `cost_for_two` : Average cost for two people -->
 <h4 id="examples">Examples</h4>
 </li>
-<li>cURL<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>curl&nbsp;-X&nbsp;GET&nbsp;-H&nbsp;&quot;lat:&nbsp;17.3937175&quot;&nbsp;-H&nbsp;&quot;lng:&nbsp;78.5340408&quot;&nbsp;&nbsp;&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/restaurant/96792</span></span><span>&quot;</span></span></span></div></pre></li>
+<li>cURL<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>curl&nbsp;-X&nbsp;GET&nbsp;-H&nbsp;&quot;place_id:&nbsp;ChIJ40jBSAKZyzsROhGhME26ZCo&quot;&nbsp;&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/place/</span></span><span>&quot;</span></span></span></div></pre></li>
 <li><p>Java</p>
-<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>OkHttpClient&nbsp;client&nbsp;=&nbsp;new&nbsp;OkHttpClient();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Request&nbsp;request&nbsp;=&nbsp;new&nbsp;Request.Builder()</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span class="meta paragraph text"><span>.url(&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/restaurant/96792</span></span><span>&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;.get()</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;.build();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Response&nbsp;response&nbsp;=&nbsp;client.newCall(request).execute();</span></span></span></div></pre></li>
+<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>OkHttpClient&nbsp;client&nbsp;=&nbsp;new&nbsp;OkHttpClient();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Request&nbsp;request&nbsp;=&nbsp;new&nbsp;Request.Builder()</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span class="meta paragraph text"><span>.url(&quot;</span><span class="markup underline link http hyperlink"><span>http://locus.arjun.ninja/api/place/</span></span><span>&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;.addHeader(&quot;place_id&quot;,&nbsp;&quot;ChIJ40jBSAKZyzsROhGhME26ZCo&quot;)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;.get()</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;.build();</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Response&nbsp;response&nbsp;=&nbsp;client.newCall(request).execute();</span></span></span></div></pre></li>
 </ul>
 </li>
 </ol>
-<p>NOTE: THIS API IS POWERED BY ZOMATO API</p></body>
+<p>NOTE: THIS API IS POWERED BY GOOGLE PLACES WEB API</p></body>
 </html>
