@@ -192,13 +192,16 @@ router.route('/bookmarks/add')
 	res.send("bookmarks");
 })
 .get(function(req, res) {
-		var users = User.find(function(err, places) {
-			if (err)
-				res.send(err);
-				
+		var users = User.find().exists('name');
+		// function(err, places) {
+		// 	if (err)
+		// 		res.send(err);
+		//
 			res.setHeader('Content-Type', 'application/json');
+		// 	res.send(users);
+		// });
 			res.send(users);
-		});
+
 	});
 	// get all the places (accessed at GET http://localhost:8080/api/places)
 
