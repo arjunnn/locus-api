@@ -228,42 +228,44 @@ router.route('/bookmarks')
 	// User.find({ 'user_id': user_id }).execFind(function (arr,data) {
   //   res.send(data);
   // });
-	User.findOne({ 'user_id': user_id }, 'user_id _id', function (err, person) {
-  if (err) return handleError(err);
-	var id = person._id;
-	User.findByIdAndUpdate(
-        id,
-        {
-					$addToSet: {
-						bookmarks: {
-									place_name: place_name,
-									latitude: latitude,
-									longitude: longitude
-							}
-					}
-				},
-        {safe: true, upsert: true, new : true},
-        function(err, model) {
-            console.log(err);
-        }
-				res.send({message: model});
-    );
-  res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
-	// User.update({user_id: user_id}, {
-	// 	// user_id: "arjunnn"
-  //   bookmarks: {
-	// 			place_name: place_name,
-	// 			latitude: latitude,
-	// 			longitude: longitude
-	// 	}
-// }, function(err, numberAffected, rawResponse) {
-//    //handle it
-// 	 if (err) res.send(err);
-// 	 else{
-// 		 res.send({message: "success"});
-// 	 }
-// })
+	// User.findOne({ 'user_id': user_id }, 'user_id _id', function (err, person) {
+  // if (err) return handleError(err);
+	// var id = person._id;
+	// User.findByIdAndUpdate(
+  //       id,
+  //       {
+	// 				$addToSet: {
+	// 					bookmarks: {
+	// 								place_name: place_name,
+	// 								latitude: latitude,
+	// 								longitude: longitude
+	// 						}
+	// 				}
+	// 			},
+  //       {safe: true, upsert: true, new : true},
+  //       function(err, model) {
+  //           console.log(err);
+  //       }
+	// 			res.send({message: model});
+  //   );
+  // res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
+	User.update({user_id: user_id}, {
+		// user_id: "arjunnn"
+		$addToSet: {
+	    bookmarks: {
+					place_name: place_name,
+					latitude: latitude,
+					longitude: longitude
+			}
+		}
+}, function(err, numberAffected, rawResponse) {
+   //handle it
+	 if (err) res.send(err);
+	 else{
+		 res.send({message: "success"});
+	 }
 })
+// })
 
 
 	// res.send(user);
