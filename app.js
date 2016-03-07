@@ -245,7 +245,7 @@ router.route('/bookmarks')
 		 res.send({message: "success"});
 	 }
 })
-})
+// })
 
 
 	// res.send(user);
