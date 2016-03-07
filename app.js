@@ -252,7 +252,7 @@ router.route('/bookmarks')
 	var bookmark = {place_name: place_name,	latitude: latitude,	longitude: longitude}
 	User.update({user_id: user_id}, {
 		// user_id: "arjunnn"
-		$addToSet: {
+		$push: {
 	    bookmarks: bookmark
 		}
 }, function(err, numberAffected, rawResponse) {
