@@ -206,7 +206,7 @@ router.route('/users/add')
 // });
 
 		var userID = new User();		// create a new instance of the user model
-		user.name = req.body.user_id;  // set the user name (comes from the request)
+		userID.id = req.body.user_id;  // set the user name (comes from the request)
         console.log('new user name added'+ userID.id);
         // res.json({ message:"added"+user.name});
 
