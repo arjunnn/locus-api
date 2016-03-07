@@ -134,10 +134,11 @@ router.route('/park')
 })
 
 
-router.route('/place/:place_id')
+router.route('/place')
 .get(function(req, res) {
-	var res_id = req.params.place_id;
+	var place_id = req.headers.place_id;
 	// url = "https://developers.zomato.com/api/v2.1/restaurant?res_id="+res_id;
+	url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+place_id+'&key='+key;
 	var options = {
 			url: url,
 			// headers: {
@@ -148,10 +149,18 @@ router.route('/place/:place_id')
 		if (!error && response.statusCode == 200) {
 			info = JSON.parse(body);
 			res.setHeader('Content-Type', 'application/json');
-			var imageURL = info.featured_image;
-			var avgCostForTwo = info.average_cost_for_two;
-			var address = info.location.address;
-			var responseJSON = JSON.stringify({address: address, image_url: imageURL, cost_for_two: avgCostForTwo});
+			// var imageURL = info.featured_image;
+			// var avgCostForTwo = info.average_cost_for_two;
+			var address = info.result.formatted_address;
+			var phoneNumber = info.result.international_phone_number;
+			if (info.result.hasOwnProperty('opening_hours')) {
+				var openNow = info.result.opening_hours.open_now;
+			}
+			else {
+				var openNow = "null";
+			}
+			var website = info.result.website;
+			var responseJSON = JSON.stringify({address: address, phone_number: phoneNumber, open_now: openNow, website: website});
 			res.send(responseJSON);
 		}
 		else {
