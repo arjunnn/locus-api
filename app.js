@@ -8,7 +8,10 @@ var app        = express();
 var morgan     = require('morgan');
 var request    = require('request');
 var path       = require('path');
-
+var mongoose   = require('mongoose');
+// var dbConnection = require(path.join(__dirname, '.', 'dbConnection'));
+//
+// dbConnection.connect();
 // configure app
 app.use(morgan('dev')); // log requests to the console
 
@@ -18,14 +21,26 @@ app.use(bodyParser.json());
 
 var port     = process.env.PORT || 8080; // set our port
 
-var mongoose   = require('mongoose');
-mongoose.connect('mongodb://node:node@novus.modulusmongo.net:27017/Iganiq8o'); // connect to our database
-var Place     = require('./app/models/place');
+mongoose.connect('mongodb://MongoLabLocus:6Dqdq3J4a7dbFw6vk0f8EEuIluv7LBmzJLR7S2KrYjo-@ds064188.mlab.com:64188/MongoLabLocus'); // connect to our database
+// mongoose.connect('mongodb://protected-citadel-4:vijay1234@ds0641s'); // connect to our database
 
+
+// mongoose.connection.on('connected', function () {
+//   console.log('Mongoose default connection open to ' + 'mongodb://protected-citadel-4:vijay1234@ds064188.mlab.com:64188/MongoLabLocus');
+// });
+//
+// // If the connection throws an error
+// mongoose.connection.on('error',function (err) {
+//   console.log('Mongoose default connection error: ' + err);
+// });
+
+var Place     = require('./app/models/place');
+var User      = require('./app/models/users');
 var latitude;
 var longitude;
 var url;
 var user_key = 'e1fd503923ef41dd65f0772663565809';
+var key = 'AIzaSyA9GJ-PPKyBHaheaNVOPqoim2afC3DcC5M'; //google places api server key
 var info;
 
 // ROUTES FOR OUR API
@@ -85,7 +100,7 @@ router.route('/geocode')
 				var responseJSON = JSON.stringify({names: restaurantNames, codes: restaurantCodes, lats: restaurantLat, lngs: restaurantLng, ratings: aggregateRatings});
 				res.setHeader('Content-Type', 'application/json');
 				res.send(responseJSON);
-		  }
+			}
 		  else {
 	      res.json(error);
 			}
@@ -95,9 +110,31 @@ router.route('/geocode')
 })
 
 
-router.route('/test')
+router.route('/park')
 .get(function(req, res) {
-	res.send("Hi there. Your connection is 100% OK");
+	latitude = req.headers.lat;
+	longitude = req.headers.lng;
+	url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+latitude+','+longitude+'&radius=50000&types=park|amusement_park&key='+key;
+
+	var options = {
+			url: url,
+	};
+	function callback(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			info = JSON.parse(body);
+			if (info.status == "OK") {
+				res.send(info);
+			}
+			else {
+				res.json({status: "error"})
+			}
+		}
+		else {
+			res.send(error);
+		}
+	}
+	request(options, callback);
+	// res.send("Hi there. Your connection is 100% OK");
 })
 
 
@@ -127,30 +164,62 @@ router.route('/restaurant/:res_id')
 	}
 request(options, callback);
 })
+
+
+router.route('/test')
+.get(function(req, res) {
+	var options = {
+			url: url,
+			headers: {
+
+			}
+	};
+	function callback(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			info = JSON.parse(body);
+		}
+		else {
+			res.send(error);
+		}
+	}
+	request(options, callback);
+	res.send("Hi there. Your connection is 100% OK");
+})
+
+router.route('/bookmark/add')
+.post(function(req, res) {
+	var user = new User();
+	res.send("bookmarks");
+})
 	// get all the places (accessed at GET http://localhost:8080/api/places)
 
 
 // // on routes that end in /places
 // // ----------------------------------------------------
-// router.route('/places')
+router.route('/users')
 
-// 	// create a place (accessed at POST http://localhost:8080/places)
-// 	.post(function(req, res) {
+	// create a place (accessed at POST http://localhost:8080/places)
+	.post(function(req, res) {
+		var user = new User({
+  name: 'Chris'
+  // username: 'sevilayha',
+  // password: 'password'
+});
 
-// 		var place = new Place();		// create a new instance of the Place model
-// 		place.name = req.body.name;  // set the places name (comes from the request)
-//         console.log('new place name added'+ place.name);
-//         res.json({ message:place.name});
+		// var user = new User();		// create a new instance of the user model
+		// user.name = req.body.name;  // set the user name (comes from the request)
+        console.log('new user name added'+ user.name);
+        res.json({ message:user.name});
 
-// 		place.save(function(err) {
-// 			if (err)
-// 				res.send(err);
+		user.save(function(err) {
+			if (err)
+				res.send(err);
 
-// 			res.json({ message: 'Place created!' });
-// 		});
+			res.json({ message: 'user created!' });
+		});
 
 
-// 	})
+	})
 
 // 	// get all the places (accessed at GET http://localhost:8080/api/places)
 // 	.get(function(req, res) {
