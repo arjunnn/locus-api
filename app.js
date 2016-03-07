@@ -249,14 +249,11 @@ router.route('/bookmarks')
 	// 			res.send({message: model});
   //   );
   // res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
+	var bookmark = {place_name: place_name,	latitude: latitude,	longitude: longitude}
 	User.update({user_id: user_id}, {
 		// user_id: "arjunnn"
-	    bookmarks: {
-				$addToSet: {
-					place_name: place_name,
-					latitude: latitude,
-					longitude: longitude
-			}
+		$addToSet: {
+	    bookmarks: bookmark
 		}
 }, function(err, numberAffected, rawResponse) {
    //handle it
