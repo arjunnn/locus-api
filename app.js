@@ -191,6 +191,14 @@ router.route('/bookmarks/add')
 	var user = new User();
 	res.send("bookmarks");
 })
+.get(function(req, res) {
+		User.find(function(err, places) {
+			if (err)
+				res.send(err);
+
+			res.json(User);
+		});
+	});
 	// get all the places (accessed at GET http://localhost:8080/api/places)
 
 
@@ -214,7 +222,7 @@ router.route('/users/add')
 			if (err)
 				res.send({message: err});
 
-				res.json({ message: 'user created!'+ user.id });
+				res.json({ message: 'user created! '+ user.id });
 		});
 
 
