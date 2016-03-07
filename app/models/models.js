@@ -14,7 +14,7 @@ var bookmark = new Schema({
 })
 var UserSchema = new Schema({
     // name: String,
-    id: String,
+    user_id: String,
     bookmarks: [bookmark]
 })
 

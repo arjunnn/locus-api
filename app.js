@@ -9,9 +9,9 @@ var morgan     = require('morgan');
 var request    = require('request');
 var path       = require('path');
 var mongoose   = require('mongoose');
-// var dbConnection = require(path.join(__dirname, '.', 'dbConnection'));
+var dbConnection = require(path.join(__dirname, '.', 'dbConnection'));
 //
-// dbConnection.connect();
+dbConnection.connect();
 // configure app
 app.use(morgan('dev')); // log requests to the console
 
@@ -21,18 +21,7 @@ app.use(bodyParser.json());
 
 var port     = process.env.PORT || 8080; // set our port
 
-mongoose.connect('mongodb://MongoLabLocus:6Dqdq3J4a7dbFw6vk0f8EEuIluv7LBmzJLR7S2KrYjo-@ds064188.mlab.com:64188/MongoLabLocus'); // connect to our database
-// mongoose.connect('mongodb://protected-citadel-4:vijay1234@ds0641s'); // connect to our database
-
-
-// mongoose.connection.on('connected', function () {
-//   console.log('Mongoose default connection open to ' + 'mongodb://protected-citadel-4:vijay1234@ds064188.mlab.com:64188/MongoLabLocus');
-// });
-//
-// // If the connection throws an error
-// mongoose.connection.on('error',function (err) {
-//   console.log('Mongoose default connection error: ' + err);
-// });
+// mongoose.connect('mongodb://MongoLabLocus:6Dqdq3J4a7dbFw6vk0f8EEuIluv7LBmzJLR7S2KrYjo-@ds064188.mlab.com:64188/MongoLabLocus');
 
 var Place     = require('./app/models/place');
 var User      = require('./app/models/users');
@@ -186,48 +175,50 @@ router.route('/test')
 	res.send("Hi there. Your connection is 100% OK");
 })
 
-router.route('/bookmarks/add')
+router.route('/bookmarks')
 .post(function(req, res) {
 	var user = new User();
 	res.send("bookmarks");
 })
-.get(function(req, res) {
-		var users = User.find(function(err, userslist) {
-			if (err)
-				res.send(err);
 
-			res.setHeader('Content-Type', 'application/json');
-			res.send(userslist);
-		});
-	});
-	// get all the places (accessed at GET http://localhost:8080/api/places)
+.get(function(req, res) {
+	var user = new User();
+	var user_id = req.headers.user_id;
+	user.find().where('user_id').equals(user_id).exec(res);
+})
+
+
 
 
 // // on routes that end in /places
 // // ----------------------------------------------------
-router.route('/users/add')
+router.route('/users')
 
-	// create a place (accessed at POST http://localhost:8080/places)
 	.post(function(req, res) {
-// 		var user = new User({
-//   name: 'Chris'
-//
-// });
-
 		var user = new User();		// create a new instance of the user model
-		user.id = req.body.user_id;  // set the user name (comes from the request)
-        console.log('new user name added'+ user.id);
+		user.user_id = req.body.user_id;  // set the user name (comes from the request)
+        // console.log('new user name added '+ user.user_id);
         // res.json({ message:"added"+user.name});
 
 		user.save(function(err) {
-			if (err)
+			if (err){
 				res.send({message: err});
-
-				res.json({ message: 'user created! '+ user.id });
+			}
+			res.send({ message: 'user created! '+ user.user_id });
 		});
 
 
 	})
+
+	.get(function(req, res) {
+			var users = User.find(function(err, userslist) {
+				if (err)
+					res.send(err);
+
+				res.setHeader('Content-Type', 'application/json');
+				res.send(userslist);
+			});
+		});
 
 // 	// get all the places (accessed at GET http://localhost:8080/api/places)
 // 	.get(function(req, res) {
