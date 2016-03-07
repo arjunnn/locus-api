@@ -28,7 +28,8 @@ var User      = require('./app/models/users');
 var latitude;
 var longitude;
 var url;
-var user_key = 'e1fd503923ef41dd65f0772663565809';
+// var user_key = 'e1fd503923ef41dd65f0772663565809';
+var user_key = 'd16619ef54ceb62c8fed56f6e48fa02a';
 var key = 'AIzaSyA9GJ-PPKyBHaheaNVOPqoim2afC3DcC5M'; //google places api server key
 var info;
 
