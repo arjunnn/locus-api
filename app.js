@@ -223,8 +223,8 @@ router.route('/bookmarks')
 //   res.send(user); // Space Ghost is a talk show host.
 // })
 	var place_name = req.body.place_name;
-	var latitudes = req.body.lat;
-	var latitudes = req.body.lng;
+	var latitude = req.body.lat;
+	var latitude = req.body.lng;
 	// User.find({ 'user_id': user_id }).execFind(function (arr,data) {
   //   res.send(data);
   // });
