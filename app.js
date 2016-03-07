@@ -192,7 +192,7 @@ router.route('/bookmarks/add')
 	res.send("bookmarks");
 })
 .get(function(req, res) {
-		var users = User.find().exists('name');
+		var users = User.find().exists('id');
 		// function(err, places) {
 		// 	if (err)
 		// 		res.send(err);
