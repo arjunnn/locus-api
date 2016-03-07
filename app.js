@@ -9,7 +9,7 @@ var morgan     = require('morgan');
 var request    = require('request');
 var path       = require('path');
 var mongoose   = require('mongoose');
-var dbConnection = require(path.join(__dirname, '.', 'dbConnection'));
+// var dbConnection = require(path.join(__dirname, '.', 'dbConnection'));
 //
 // dbConnection.connect();
 // configure app
@@ -175,19 +175,17 @@ router.route('/test')
 	res.send("Hi there. Your connection is 100% OK");
 })
 
+
 router.route('/bookmarks')
 .post(function(req, res) {
-	var user = new User();
-	res.send("bookmarks");
+	res.send("Hi there. Your connection is 100% OK");
+
 })
 
 .get(function(req, res) {
-	var user = new User();
-	var user_id = req.headers.user_id;
-	user.find().where('user_id').equals(user_id).exec(res);
+	res.send("Hi there. Your connection is 100% OK");
+
 })
-
-
 
 
 // // on routes that end in /places
