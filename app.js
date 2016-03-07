@@ -214,7 +214,7 @@ router.route('/test')
 
 router.route('/bookmarks')
 .post(function(req, res) {
-	// var user_id = req.body.user_id;
+	var user_id = req.body.user_id;
 	// var user = User.find({
 	// 	'user_id': user_id
 // 	// });
@@ -228,7 +228,7 @@ router.route('/bookmarks')
 	// User.find({ 'user_id': user_id }).execFind(function (arr,data) {
   //   res.send(data);
   // });
-	User.findOne({ 'user_id': 'arjunmunji' }, 'user_id', function (err, person) {
+	User.findOne({ 'user_id': user_id }, 'user_id', function (err, person) {
   if (err) return handleError(err);
   res.send({message: person.user_id}) // Space Ghost is a talk show host.
 })
