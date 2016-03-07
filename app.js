@@ -217,27 +217,20 @@ router.route('/bookmarks')
 	var user_id = req.body.user_id;
 	// var user = User.find({
 	// 	'user_id': user_id
-	// });
-	User.findOne({ 'user_id': user_id }, 'user_id', function (err, user) {
-  if (err) return handleError(err);
-  res.send(user); // Space Ghost is a talk show host.
-})
+// 	// });
+// 	User.findOne({ 'user_id': user_id }, 'user_id', function (err, user) {
+//   if (err) return handleError(err);
+//   res.send(user); // Space Ghost is a talk show host.
+// })
 	var place_name = req.body.place_name;
 	var latitudes = req.body.lat;
 	var latitudes = req.body.lng;
-	// var user = User.find();
-	// User.find({
-  //   'user_id': user_id
-  // }, function(err, teams) {
-  //   if (err) {
-  //     onErr(err, callback);
-  //   } else {
-  //     callback("", teams);
-  //   }
-  // });
+	User.find({ 'user_id': user_id }).execFind(function (arr,data) {
+    res.send(data);
+  });
 
 
-	res.send(user);
+	// res.send(user);
 
 })
 
