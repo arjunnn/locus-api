@@ -32,7 +32,7 @@ var url;
 var user_key = 'd16619ef54ceb62c8fed56f6e48fa02a';
 var key = 'AIzaSyA9GJ-PPKyBHaheaNVOPqoim2afC3DcC5M'; //google places api server key
 var info;
-
+var radius;
 // ROUTES FOR OUR API
 // =============================================================================
 
@@ -59,36 +59,41 @@ router.get('/', function(req, res) {
 router.route('/geocode')
 
 .get(function(req, res) {
-    latitude = req.headers.lat;
-    longitude = req.headers.lng;
-    url = 'https://developers.zomato.com/api/v2.1/geocode?lat='+latitude+'&lon='+longitude;
+    // latitude = req.headers.lat;
+    // longitude = req.headers.lng;
+    // url = 'https://developers.zomato.com/api/v2.1/geocode?lat='+latitude+'&lon='+longitude;
+		latitude = req.headers.lat;
+		longitude = req.headers.lng;
+		radius = req.headers.radius;
+		url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+latitude+','+longitude+'&radius='+radius+'&types=park|amusement_park|art_gallery|bowling_alley|cafe|zoo|restaurant|night_club|museum&key='+key;
     var options = {
         url: url,
-        headers: {
-            'user_key': user_key
-        }
+        // headers: {
+        //     'user_key': user_key
+        // }
     };
 		function callback(error, response, body) {
   		if (!error && response.statusCode == 200) {
 				info = JSON.parse(body);
-				var restaurantCodes = [];
-				var restaurantLat = [];
-				var restaurantLng = [];
-				var aggregateRatings = [];
-				var restaurantNames = [];
-				for (var restaurant in info.nearby_restaurants) {
-					if (info.nearby_restaurants.hasOwnProperty(restaurant)) {
-					}
+				var placeCodes = [];
+				var placeLat = [];
+				var placeLng = [];
+				var ratings = [];
+				var placeNames = [];
+				// for (var place in info.nearby_places) {
+				// 	if (info.nearby_places.hasOwnProperty(place)) {
+				// 	}
+				// }
+				for (var i = 0; i < info.results.length ; i ++) {
+					placeCodes[i] = info.results[i].place_id;
+					placeLat[i] = info.results[i].geometry.location.lat;
+					placeLng[i] = info.results[i].geometry.location.lng;
+					ratings[i] = info.results[i].rating;
+					placeNames[i] = info.results[i].name;
 				}
-				for (var i = 0; i < restaurant; i ++) {
-					restaurantCodes[i] = info.nearby_restaurants[i+1].restaurant.R.res_id;
-					restaurantLat[i] = info.nearby_restaurants[i+1].restaurant.location.latitude;
-					restaurantLng[i] = info.nearby_restaurants[i+1].restaurant.location.longitude;
-					aggregateRatings[i] = info.nearby_restaurants[i+1].restaurant.user_rating.aggregate_rating;
-					restaurantNames[i] = info.nearby_restaurants[i+1].restaurant.name;
-				}
-				var responseJSON = JSON.stringify({names: restaurantNames, codes: restaurantCodes, lats: restaurantLat, lngs: restaurantLng, ratings: aggregateRatings});
+				var responseJSON = JSON.stringify({names: placeNames, codes: placeCodes, lats: placeLat, lngs: placeLng, ratings: ratings});
 				res.setHeader('Content-Type', 'application/json');
+				console.log(info.results.length);
 				res.send(responseJSON);
 			}
 		  else {
@@ -104,7 +109,8 @@ router.route('/park')
 .get(function(req, res) {
 	latitude = req.headers.lat;
 	longitude = req.headers.lng;
-	url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+latitude+','+longitude+'&radius=50000&types=park|amusement_park&key='+key;
+	radius = req.headers.radius;
+	url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+latitude+','+longitude+'&radius='+radius+'&types=park|amusement_park|art_gallery|bowling_alley|cafe|zoo|restaurant|night_club|museum&key='+key;
 
 	var options = {
 			url: url,
@@ -128,15 +134,15 @@ router.route('/park')
 })
 
 
-router.route('/restaurant/:res_id')
+router.route('/place/:place_id')
 .get(function(req, res) {
-	var res_id = req.params.res_id;
-	url = "https://developers.zomato.com/api/v2.1/restaurant?res_id="+res_id;
+	var res_id = req.params.place_id;
+	// url = "https://developers.zomato.com/api/v2.1/restaurant?res_id="+res_id;
 	var options = {
 			url: url,
-			headers: {
-					'user_key': user_key
-			}
+			// headers: {
+			// 		'user_key': user_key
+			// }
 	};
 	function callback(error, response, body) {
 		if (!error && response.statusCode == 200) {
@@ -180,9 +186,13 @@ router.route('/test')
 router.route('/bookmarks')
 .post(function(req, res) {
 	var user_id = req.body.user_id;
-	var user = User.find({
-		'user_id': user_id
-	})
+	// var user = User.find({
+	// 	'user_id': user_id
+	// });
+	User.findOne({ 'user_id': user_id }, 'user_id', function (err, user) {
+  if (err) return handleError(err);
+  res.send(user); // Space Ghost is a talk show host.
+})
 	var place_name = req.body.place_name;
 	var latitudes = req.body.lat;
 	var latitudes = req.body.lng;
