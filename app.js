@@ -205,16 +205,16 @@ router.route('/users/add')
 //
 // });
 
-		var userID = new User();		// create a new instance of the user model
-		userID.id = req.body.user_id;  // set the user name (comes from the request)
-        console.log('new user name added'+ userID.id);
+		var user = new User();		// create a new instance of the user model
+		user.id = req.body.user_id;  // set the user name (comes from the request)
+        console.log('new user name added'+ user.id);
         // res.json({ message:"added"+user.name});
 
 		user.save(function(err) {
 			if (err)
-				res.send(err);
+				res.send({message: err});
 
-				res.json({ message: 'user created!'+ userID.id });
+				res.json({ message: 'user created!'+ user.id });
 		});
 
 
