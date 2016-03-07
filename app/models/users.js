@@ -14,8 +14,8 @@ var bookmark = new Schema({
 })
 
 var userSchema = new Schema({
-    name: String,
-    id: String,
+    // name: String,
+    user_id: String,
     bookmarks: [bookmark]
 })
 var User = mongoose.model('User', userSchema);
