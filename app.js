@@ -32,7 +32,7 @@ var url;
 var user_key = 'd16619ef54ceb62c8fed56f6e48fa02a';
 var key = 'AIzaSyA9GJ-PPKyBHaheaNVOPqoim2afC3DcC5M'; //google places api server key
 var info;
-
+var radius;
 // ROUTES FOR OUR API
 // =============================================================================
 
@@ -104,7 +104,8 @@ router.route('/park')
 .get(function(req, res) {
 	latitude = req.headers.lat;
 	longitude = req.headers.lng;
-	url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+latitude+','+longitude+'&radius=50000&types=park|amusement_park&key='+key;
+	radius = req.headers.radius
+	url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+latitude+','+longitude+'&radius='+radius+'&types=park|amusement_park|art_gallery|bowling_alley|cafe|zoo|restaurant|night_club|museum&key='+key;
 
 	var options = {
 			url: url,
