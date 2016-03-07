@@ -236,11 +236,11 @@ router.route('/bookmarks')
         {
 					$addToSet: {
 						bookmarks: [
-							bookmark {
+
 								place_name: place_name,
 								latitude: latitude,
 								longitude: longitude
-							}
+				
 						]
 					}
 				},
