@@ -162,7 +162,7 @@ router.route('/place')
 			else {
 				var address = "null"
 			}
-			if (info.result.hasOwnProperty('phoneNumber')) {
+			if (info.result.hasOwnProperty('international_phone_number')) {
 				var phoneNumber = info.result.international_phone_number;
 			}
 			else {
