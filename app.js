@@ -251,8 +251,8 @@ router.route('/bookmarks')
   // res.send({message: person.user_id, id: id}) // Space Ghost is a talk show host.
 	User.update({user_id: user_id}, {
 		// user_id: "arjunnn"
-		$addToSet: {
 	    bookmarks: {
+				$addToSet: {
 					place_name: place_name,
 					latitude: latitude,
 					longitude: longitude
