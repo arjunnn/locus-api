@@ -172,7 +172,7 @@ router.route('/place')
 				var openNow = info.result.opening_hours.open_now;
 			}
 			else {
-				var openNow = "null";
+				var openNow = "true";
 			}
 			if (info.result.hasOwnProperty('website')) {
 				var website = info.result.website;
